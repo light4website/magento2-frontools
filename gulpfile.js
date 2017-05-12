@@ -9,20 +9,26 @@ const plugins = require('gulp-load-plugins')({
           'js-yaml'         : 'yaml',
           'marked-terminal' : 'markedTerminal',
           'postcss-reporter': 'reporter',
-          'run-sequence'    : 'runSequence'
+          'run-sequence'    : 'runSequence',
+          'gulp-typescript' : 'ts',
+          'gulp.spritesmith': 'spritesmith',
+          'gulp-replace-name':'replaceName',
+          'gulp-responsive' : 'responsive',
+          'gulp-gm'         : 'gm'
         }
-      }),
-      config = {
+    }),
+    config = {
         'projectPath': plugins.fs.realpathSync('../../../') + '/'
-      };
+    };
 
 plugins.errorMessage = require('./helper/error-message')(plugins);
 plugins.getThemes = require('./helper/get-themes')(plugins, config);
 config.themes = require('./helper/config-loader')('themes.json', plugins, config, false);
+config.typescript = require('./helper/config-loader')('tsconfig.json', plugins, config, false);
 
 // Tasks loading
 require('gulp-task-loader')({
-  dir    : 'task',
-  plugins: plugins,
-  configs: config
+    dir    : 'task',
+    plugins: plugins,
+    configs: config
 });
